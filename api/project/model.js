@@ -5,8 +5,9 @@ async function fetch() {
     return await db('projects');
 }
 
-function insert(project) {
-    return db('projects').insert(project);
+async function insert(project) {
+    const [id] = await db('projects').insert(project);
+    return await db('projects').where('project_id', id);
 }
 
 module.exports = {
