@@ -2,7 +2,7 @@
 const db = require('../../data/dbConfig')
 
 async function fetch() {
-    return await db('tasks as t')
+    const rows = await db('tasks as t')
         .leftJoin('projects as p', 'p.project_id', 't.project_id')
         .select(
             't.task_id',
@@ -12,6 +12,17 @@ async function fetch() {
             'p.project_name',
             'p.project_description')
         .orderBy('p.project_id')
+
+    const result = []
+    
+    rows.forEach(row => {
+        if (row.task_completed === 0) {
+            result.push({...row, task_completed: false})
+        } else {
+            result.push({...row, task_completed: true})
+        }
+    })
+    return result;
 
 }
 

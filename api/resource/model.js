@@ -7,7 +7,8 @@ async function fetch() {
 
 async function insert(resource) {
     const [id] = await db('resources').insert(resource);
-    return await db('resources').where('resource_id', id);
+    const [result] = await db('resources').where('resource_id', id);
+    return result;
 }
 
 module.exports = {
