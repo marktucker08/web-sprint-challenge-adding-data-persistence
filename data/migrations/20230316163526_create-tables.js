@@ -9,7 +9,8 @@ exports.up = function(knex) {
         tbl.string('project_name', 255)
             .notNullable();
         tbl.string('project_description');
-        tbl.boolean('project_completed');
+        tbl.boolean('project_completed')
+            .defaultTo('false');
     })
     .createTable('tasks', tbl => {
         tbl.increments('task_id');
