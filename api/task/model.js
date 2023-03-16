@@ -28,7 +28,12 @@ async function fetch() {
 
 async function insert(task) {
     const [id] = await db('tasks').insert(task);
-    return await db('tasks').where('task_id', id);
+    const [rows] = await db('tasks').where('task_id', id);
+    if (rows.task_completed === 0) {
+        return ({...rows, task_completed: false})
+    } else {
+        return ({...rows, task_completed: true})
+    }
 }
 
 module.exports = {
